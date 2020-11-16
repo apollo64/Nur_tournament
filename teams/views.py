@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, ListView
 
 from teams.forms import TeamForm
-from teams.models import Team
+from teams.models import Team, Division
 
 
 # def create_view(request):
@@ -26,19 +26,38 @@ from teams.models import Team
 #                            Team.objects.create(name=name, score = 0)
 #            return redirect('division_table')
 #        else:
-#            return render(request, 'index.html', context={'form': form})
+#            return render(request, 'index2.html', context={'form': form})
 #
 class TeamCreateView(FormView):
     template_name = 'index.html'
     form_class = TeamForm
-    success_url = '/division_table/'
+    success_url = 'divisions'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # form.send_email()
-        return redirect('division_table')
+        return redirect('divisions')
 
 # class AuthorCreate(CreateView):
 #     model = Team
 #     fields = ['name1',  ]
+
+
+class DivisionTeamView(ListView):
+    model = Team
+    context_object_name = 'team_division_list'
+    template_name = 'divisions.html'
+
+    def get_queryset(self):
+        teams_list = Team.objects.get.all
+        for t in teams_list[-8:]:
+            Division.objects.create(name ="A", name_teams = t['name'])
+        for t in teams_list[:8]:
+            Division.objects.create(name ="B", name_teams = t['name'])
+        data = {"A": [Division.objects.filter(name__iexact="A")],
+                "B": [Division.objects.filter(name__iexact="B")]}
+        # divisions = ['A', 'B']
+        # for data
+        return data
+

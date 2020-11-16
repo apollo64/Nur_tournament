@@ -5,11 +5,12 @@
     <title>Welcome to tournament board</title>
 </head>
 <body>
-{{ import form.py }}
+
 <label>Пожалуйста добавьте 16 команд*:</label><br/>
-<form>
-
-
-</form>
+<form method="POST" class="post-form">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 </body>
 </html>
