@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Team(models.Model):
-    name = models.CharField(max_length=120, null=False, blank=False)
+    name = models.CharField(max_length=120, null=False, blank=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField(default=0)
 

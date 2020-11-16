@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from teams.views import TeamCreateView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('index', TeamCreateView.as_view),
+    path('division_table', TeamCreateView.as_view),
 ]
