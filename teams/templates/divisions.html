@@ -10,7 +10,7 @@
   <ul>
     {% for team in team_division_list %}
       <li>
-        {{ team.name }}
+        {{ team.name }} {{team.division.name}}
       </li>
     {% endfor %}
   </ul>
