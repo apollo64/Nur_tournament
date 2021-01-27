@@ -21,4 +21,4 @@ model teams
 name
 score
 division
-2.
+2.How to save from the form to he base all teams/ check http://127.0.0.1:8001/index - (probably abcense of

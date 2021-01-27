@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Divisions</title>
+    <title>Teams of Divisions</title>
 </head>
 <body>
-
+<h1>All Marses</h1>
+  {% if team_division_list %}
+  <ul>
+    {% for team in team_division_list %}
+      <li>
+        {{ team.name }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no teams yet</p>
+  {% endif %}
 </body>
 </html>

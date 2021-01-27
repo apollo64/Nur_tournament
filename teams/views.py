@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.views.generic import FormView, CreateView, ListView
+from requests import Response
 
-from teams.forms import TeamForm
+from teams.forms import TeamForm, TeamFormset
 from teams.models import Team, Division
 
 
@@ -37,27 +38,46 @@ class TeamCreateView(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # form.send_email()
-        return redirect('divisions')
+
+        # return redirect('divisions')
+        for i in form:
+            Team.objects
+        return Response(status=200)
 
 # class AuthorCreate(CreateView):
 #     model = Team
 #     fields = ['name1',  ]
+
+def create_teams_normal(request):
+    template_name = 'index.html'
+    heading_message = 'Welcome to tournament'
+    # max_number_teams = 2 cv
+    if request.method == 'GET':
+        formset = TeamFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = TeamFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                # extract name from each form and save
+                name = form.cleaned_data.get('name')
+                # save book instance
+                if name:
+                    Team(name=name).save()
+                    # redirect('divisions')
+            # once all books are saved, redirect to book list view
+            return redirect('divisions')
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,
+    })
+
 
 
 class DivisionTeamView(ListView):
     model = Team
     context_object_name = 'team_division_list'
     template_name = 'divisions.html'
+    queryset = Team.objects.all()
 
-    def get_queryset(self):
-        teams_list = Team.objects.get.all
-        for t in teams_list[-8:]:
-            Division.objects.create(name ="A", name_teams = t['name'])
-        for t in teams_list[:8]:
-            Division.objects.create(name ="B", name_teams = t['name'])
-        data = {"A": [Division.objects.filter(name__iexact="A")],
-                "B": [Division.objects.filter(name__iexact="B")]}
-        # divisions = ['A', 'B']
-        # for data
-        return data
+
 

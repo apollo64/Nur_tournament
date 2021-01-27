@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from teams.views import TeamCreateView, DivisionTeamView
+from teams.views import create_teams_normal, DivisionTeamView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index', TeamCreateView.as_view(), name='add_team'),
+    # path('index', TeamCreateView.as_view(), name='add_team'),
+    path('index', create_teams_normal, name='add_team'),
     path('divisions', DivisionTeamView.as_view(), name='divisions'),
 ]
